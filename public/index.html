@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A regular English-speaking meet-up in Cologne, Germany">
+    <meta name="author" content="Antony Seedhouse">
 
-<head>
-    <meta lang="en" charset="utf-8">
     <title>Thursday Night Drinks Cologne</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/heroic-features.css" rel="stylesheet">
+
     <script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
     <script src="https://cdn.jsdelivr.net/vuefire/latest/vuefire.min.js"></script>
@@ -12,60 +23,95 @@
 </head>
 
 <body>
-    <div id="top">
-        <h1>Thursday Night Drinks Cologne</h1>
-        <p>A regular English-speaking meet-up in Cologne, Germany.</p>
-        <p>All are welcome. Native English speakers, people who like speaking English, ex-pats, residents, travellers passing through - come join us for Thursday Night Drinks.</p>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Jumbotron Header -->
+        <header class="jumbotron hero-spacer">
+            <h1>Thursday Night Drinks Cologne</h1>
+            <p>A regular English-speaking meet-up in Cologne, Germany</p>
+            <p>All are welcome. Native English speakers, people who like speaking English, ex-pats, residents, travellers passing through - come join us for Thursday Night Drinks</p>
+            <p> <a class="btn btn-primary btn-large">Follow us on Toytown Germany</a> <a class="btn btn-primary btn-large">Like us on Facebook</a> <a class="btn btn-primary btn-large">Subscribe to our Facebook events</a></p>
+        </header>
+
+        <hr>
+
+        <!-- Title -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Upcoming events</h3>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Page Features -->
+        <div class="row text-center" id="events">
+
+            <div v-for="event in events" class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>{{ event.begin | date }}</h3>
+                        <h4>{{ event.location }}</h4>
+                        <p>Weyerstraße 84, Cologne 50676</p>
+                        <p>
+                            <a href="#" class="btn btn-primary">Facebook</a> <a href="#" class="btn btn-default">Google Maps</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright © Antony Seedhouse 2016</p>
+                </div>
+            </div>
+        </footer>
+
     </div>
-    <div id="event">
-        <h2>Next event</h2>
-        <p>
-            <em>{{ event.title }}</em>
-            <br> {{ event.begin | date }}
-            <br> {{ event.location }}, {{ event.address }}
-        </p>
-        <ul>
-            <li><a v-bind:href="event.facebook" rel="noopener noreferrer">Facebook Event</a></li>
-            <li><a v-bind:href="event.google_maps" rel="noopener noreferrer">Google Maps</a></li>
-        </ul>
-    </div>
-    <div id="follow">
-        <h2>Follow us</h2>
-        <ul>
-            <li>Follow us on <a href="https://www.toytowngermany.com/forum/topic/179557-thursday-night-drinks-cologne/?do=getLastComment" rel="noopener noreferrer">Toytown Germany</a></li>
-            <li>Like us on <a href="https://www.facebook.com/tndcologne/" rel="noopener noreferrer">Facebook</a></li>
-            <li>Subscribe to our <a href="https://www.facebook.com/tndcologne/events/" rel="noopener noreferrer">Facebook Events</a></li>
-        </ul>
-    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.js"></script>
+
     <script>
         // Initialize Firebase
         var config = {
-            apiKey: "AIzaSyC_oOHB7N_CG4HIlYbUpW3Fp2m_tAIQ8bQ",
-            authDomain: "events-e712a.firebaseapp.com",
-            databaseURL: "https://events-e712a.firebaseio.com",
-            storageBucket: "events-e712a.appspot.com",
-            messagingSenderId: "486770103405"
+        apiKey: "AIzaSyC_oOHB7N_CG4HIlYbUpW3Fp2m_tAIQ8bQ",
+        authDomain: "events-e712a.firebaseapp.com",
+        databaseURL: "https://events-e712a.firebaseio.com",
+        storageBucket: "events-e712a.appspot.com",
+        messagingSenderId: "486770103405"
         };
         firebase.initializeApp(config);
         var database = firebase.database();
 
         var vm = new Vue({
-            el: '#event',
+            el: '#events',
             firebase: {
-                event: {
-                    source: database.ref('next'),
-                    asObject: true
+                events: {
+                    source: database.ref('events').orderByChild('begin').limitToLast(4),
+                    // asObject: true
                 }
             },
             filters: {
-                date: function(value) {
+                date: function (value) {
                     if (!value) return ''
                     value = value.toString();
-                    return moment(value).tz('Europe/Berlin').format('dddd, MMMM Do YYYY, h:mm:ssa zz')
+                    return moment(value).tz('Europe/Berlin').format('Do MMMM, h:mma')
                 }
             }
         })
-    </script>
+		</script>
 </body>
-
 </html>
