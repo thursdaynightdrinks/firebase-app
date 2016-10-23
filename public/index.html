@@ -1,68 +1,71 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta lang="en" charset="utf-8">
-		<title>Thursday Night Drinks Cologne</title>
-		<script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
-		<script src="https://cdn.jsdelivr.net/vuefire/latest/vuefire.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/momentjs.timezone/0.5.6/moment-timezone-with-data-2010-2020.min.js"></script>
-	</head>
-	<body>
+
+<head>
+    <meta lang="en" charset="utf-8">
+    <title>Thursday Night Drinks Cologne</title>
+    <script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
+    <script src="https://cdn.jsdelivr.net/vuefire/latest/vuefire.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs.timezone/0.5.6/moment-timezone-with-data-2010-2020.min.js"></script>
+</head>
+
+<body>
     <div id="top">
-      <h1>Thursday Night Drinks Cologne</h1>
-      <p>A regular English-speaking meet-up in Cologne, Germany.</p>
-      <p>All are welcome. Native English speakers, people who like speaking English, ex-pats, residents, travellers passing through - come join us for Thursday Night Drinks.</p>
+        <h1>Thursday Night Drinks Cologne</h1>
+        <p>A regular English-speaking meet-up in Cologne, Germany.</p>
+        <p>All are welcome. Native English speakers, people who like speaking English, ex-pats, residents, travellers passing through - come join us for Thursday Night Drinks.</p>
     </div>
-		<div id="event">
-			<h2>Next event</h2>
-			<p>
-        <em>{{ event.title }}</em><br>
-			  {{ event.begin | date }}<br>
-        {{ event.location }}, {{ event.address }}
-      </p>
-			<ul>
-				<li><a v-bind:href="event.facebook" rel="noopener noreferrer">Facebook Event</a></li>
-				<li><a v-bind:href="event.google_maps" rel="noopener noreferrer">Google Maps</a></li>
-			</ul>
-		</div>
-		<div id="follow">
-      <h2>Follow us</h2>
-			<ul>
-				<li>Follow us on <a href="https://www.toytowngermany.com/forum/topic/179557-thursday-night-drinks-cologne/?do=getLastComment" rel="noopener noreferrer">Toytown Germany</a></li>
-				<li>Like us on <a href="https://www.facebook.com/tndcologne/" rel="noopener noreferrer">Facebook</a></li>
-				<li>Subscribe to our <a href="https://www.facebook.com/tndcologne/events/" rel="noopener noreferrer">Facebook Events</a></li>
-			</ul>
-		</div>
-		<script>
-			// Initialize Firebase
-			var config = {
-			apiKey: "AIzaSyC_oOHB7N_CG4HIlYbUpW3Fp2m_tAIQ8bQ",
-			authDomain: "events-e712a.firebaseapp.com",
-			databaseURL: "https://events-e712a.firebaseio.com",
-			storageBucket: "events-e712a.appspot.com",
-			messagingSenderId: "486770103405"
-			};
-			firebase.initializeApp(config);
-			var database = firebase.database();
-			
-			var vm = new Vue({
-				el: '#event',
-				firebase: {
-					event: {
-						source: database.ref('next'),
-						asObject: true
-					}
-				},
-				filters: {
-					date: function (value) {
-						if (!value) return ''
-						value = value.toString();
-						return moment(value).tz('Europe/Berlin').format('dddd, MMMM Do YYYY, h:mm:ssa zz')
-					}
-				}
-			})
-		</script>
-	</body>
+    <div id="event">
+        <h2>Next event</h2>
+        <p>
+            <em>{{ event.title }}</em>
+            <br> {{ event.begin | date }}
+            <br> {{ event.location }}, {{ event.address }}
+        </p>
+        <ul>
+            <li><a v-bind:href="event.facebook" rel="noopener noreferrer">Facebook Event</a></li>
+            <li><a v-bind:href="event.google_maps" rel="noopener noreferrer">Google Maps</a></li>
+        </ul>
+    </div>
+    <div id="follow">
+        <h2>Follow us</h2>
+        <ul>
+            <li>Follow us on <a href="https://www.toytowngermany.com/forum/topic/179557-thursday-night-drinks-cologne/?do=getLastComment" rel="noopener noreferrer">Toytown Germany</a></li>
+            <li>Like us on <a href="https://www.facebook.com/tndcologne/" rel="noopener noreferrer">Facebook</a></li>
+            <li>Subscribe to our <a href="https://www.facebook.com/tndcologne/events/" rel="noopener noreferrer">Facebook Events</a></li>
+        </ul>
+    </div>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyC_oOHB7N_CG4HIlYbUpW3Fp2m_tAIQ8bQ",
+            authDomain: "events-e712a.firebaseapp.com",
+            databaseURL: "https://events-e712a.firebaseio.com",
+            storageBucket: "events-e712a.appspot.com",
+            messagingSenderId: "486770103405"
+        };
+        firebase.initializeApp(config);
+        var database = firebase.database();
+
+        var vm = new Vue({
+            el: '#event',
+            firebase: {
+                event: {
+                    source: database.ref('next'),
+                    asObject: true
+                }
+            },
+            filters: {
+                date: function(value) {
+                    if (!value) return ''
+                    value = value.toString();
+                    return moment(value).tz('Europe/Berlin').format('dddd, MMMM Do YYYY, h:mm:ssa zz')
+                }
+            }
+        })
+    </script>
+</body>
+
 </html>
