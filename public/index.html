@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
+		<meta lang="en" charset="utf-8">
 		<title>Thursday Night Drinks Cologne</title>
 		<script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
@@ -10,17 +10,25 @@
 		<script src="https://cdn.jsdelivr.net/momentjs.timezone/0.5.6/moment-timezone-with-data-2010-2020.min.js"></script>
 	</head>
 	<body>
+    <div id="top">
+      <h1>Thursday Night Drinks Cologne</h1>
+      <p>A regular English-speaking meet-up in Cologne, Germany.</p>
+      <p>All are welcome. Native English speakers, people who like speaking English, ex-pats, residents, travellers passing through - come join us for Thursday Night Drinks.</p>
+    </div>
 		<div id="event">
-			<h1>Next event:</h1>
-			<h1>{{ event.title }}</h1>
-			<h2>{{ event.begin | date }}</h2>
-			<h3>{{ event.location }}, {{ event.address }}</h3>
+			<h2>Next event</h2>
+			<p>
+        <em>{{ event.title }}</em><br>
+			  {{ event.begin | date }}<br>
+        {{ event.location }}, {{ event.address }}
+      </p>
 			<ul>
 				<li><a v-bind:href="event.facebook" rel="noopener noreferrer">Facebook Event</a></li>
 				<li><a v-bind:href="event.google_maps" rel="noopener noreferrer">Google Maps</a></li>
 			</ul>
 		</div>
 		<div id="follow">
+      <h2>Follow us</h2>
 			<ul>
 				<li>Follow us on <a href="https://www.toytowngermany.com/forum/topic/179557-thursday-night-drinks-cologne/?do=getLastComment" rel="noopener noreferrer">Toytown Germany</a></li>
 				<li>Like us on <a href="https://www.facebook.com/tndcologne/" rel="noopener noreferrer">Facebook</a></li>
