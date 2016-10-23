@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Thursday Night Drinks Cologne</title>
+		<script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/3.5.1/firebase.js"></script>
+		<script src="https://cdn.jsdelivr.net/vuefire/latest/vuefire.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/momentjs.timezone/0.5.6/moment-timezone-with-data-2010-2020.min.js"></script>
+	</head>
+	<body>
+		<div id="event">
+			<h1>Next event:</h1>
+			<h1>{{ event.title }}</h1>
+			<h2>{{ event.begin | date }}</h2>
+			<h3>{{ event.location }}, {{ event.address }}</h3>
+			<ul>
+				<li><a v-bind:href="event.facebook" rel="noopener noreferrer">Facebook Event</a></li>
+				<li><a v-bind:href="event.google_maps" rel="noopener noreferrer">Google Maps</a></li>
+			</ul>
+		</div>
+		<div id="follow">
+			<ul>
+				<li>Follow us on <a href="https://www.toytowngermany.com/forum/topic/179557-thursday-night-drinks-cologne/?do=getLastComment" rel="noopener noreferrer">Toytown Germany</a></li>
+				<li>Like us on <a href="https://www.facebook.com/tndcologne/" rel="noopener noreferrer">Facebook</a></li>
+				<li>Subscribe to our <a href="https://www.facebook.com/tndcologne/events/" rel="noopener noreferrer">Facebook Events</a></li>
+			</ul>
+		</div>
+		<script>
+			// Initialize Firebase
+			var config = {
+			apiKey: "AIzaSyC_oOHB7N_CG4HIlYbUpW3Fp2m_tAIQ8bQ",
+			authDomain: "events-e712a.firebaseapp.com",
+			databaseURL: "https://events-e712a.firebaseio.com",
+			storageBucket: "events-e712a.appspot.com",
+			messagingSenderId: "486770103405"
+			};
+			firebase.initializeApp(config);
+			var database = firebase.database();
+			
+			var vm = new Vue({
+				el: '#event',
+				firebase: {
+					event: {
+						source: database.ref('next'),
+						asObject: true
+					}
+				},
+				filters: {
+					date: function (value) {
+						if (!value) return ''
+						value = value.toString();
+						return moment(value).tz('Europe/Berlin').format('dddd, MMMM Do YYYY, h:mm:ssa zz')
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
